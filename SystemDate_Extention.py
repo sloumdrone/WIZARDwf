@@ -1,32 +1,10 @@
-
-    # 57680b6b0009e8724ab4718bd8aed09b portfolioID for 2017
-    # 57b3847e008ced8cfd57553dd3d7b3b5 test portfolioID 2017
-
-    
-
-
-
 ###########################################################################################
 #
 # NOTES REGARDING THIS SCRIPT (Python v.2.7.12) VERSION 1.0 DECEMBER 2016 (Evans & Adkins)
 #
 ###########################################################################################
-#
-# For The WorkFront 2017 Portfolio
-# 
-# This file was chartered by Quotit Plan Maintenance to work in conjunction with WorkFront
-# The purpose of this file to update the planned completion date (pcd) field in WorkFront
-#     for projects which are late. This happens when the pcd is one day before the current
-# This means that the project is late from the original estimate, which will then get
-#     surfaced to the brokers in iPro: problem.
-# This script: after identifing projects which are late, updates the pcd by moving it
-#     forward two weeks. This does not happen for 'Live' nor 'Discontinued' projects.
-# Since some projects need to have their ETAs monitored and manually updated,
-#     a new field in WorkFront (in the 'Quotit PM Tracking' custom form) allows the user
-#     to turn off the auto-update. Default set to on.
-# Windows Task Scheduler is setup to run this script every morning under the name:
-#     'Update Expired Planned Completion Date in WorkFront'.
-#
+# UPDATES ALL EXPIRED PROJECTS TO HAVE A NEW DEADLINE TWO WEEKS OUT PROVIDED THE PROJECTS
+# EXPIRED THE DAY BEFORE THE RUN DAY. USE WITH AUTOMATED TASK MANAGEMENT TO RUN DAILY.
 ###########################################################################################
 
 
@@ -47,15 +25,13 @@ def getProject():
     global currentDate
     global projIDlist
     results = client.search(ObjCode.PROJECT,
-                            {'portfolioID':'57680b6b0009e8724ab4718bd8aed09b', 
+                            {'portfolioID':'IDgoeshere', 
                              'plannedCompletionDate':str(currentDate),
                              '$$LIMIT':2000, 
                              'DE:project:Auto Update ETA':'Yes'},
                             fields=['plannedCompletionDate', 'name', 'status']
     )
     
-    # 57680b6b0009e8724ab4718bd8aed09b portfolioID for 2017
-    # 57b3847e008ced8cfd57553dd3d7b3b5 test-portfolioID 2017
          
     for p in results:
         project = AtTaskObject(p)
@@ -100,7 +76,7 @@ def writeToFile(listData):
             outFile.write(str(datetime.now().strftime("%Y-%m-%d %H:%M")) + ' | ' + item['projID'] + ' | ' + item['projName'] + '\n')
             templistforemail.append(str(datetime.now().strftime("%Y-%m-%d %H:%M")) + ' | ' + item['projID'] + ' | ' + item['projName'] + '\n')
         # Sends email to each person in email list
-        names = ['brian.evans@quotit.com','matthew.smithson@quotit.com','andrew.kaplan@quotit.com']
+        names = ['foo@bar.com','person@domain.com']
         for name in names:
             mailsend.sendmail(''.join(templistforemail), name)
     outFile.close()
@@ -116,9 +92,9 @@ def wizardCall():
 # Main()
 if __name__ == '__main__':
     wizardCall()
-    username = 'brian.evans@quotit.com'
+    username = 'foo@bar.com'
     password = 'CCllrMzGU' # encrypted password
-    client = StreamClient('https://wordandbrown.attask-ondemand.com/attask/api/')
+    client = StreamClient('https://somedomain.attask-ondemand.com/attask/api/')
     client.login(username,masking.unmask(password))
     getProject()
     updateProjectPCD()
