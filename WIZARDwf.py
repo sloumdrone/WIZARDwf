@@ -4,7 +4,7 @@
 #
 ###########################################################################################
 # UPDATES ALL EXPIRED PROJECTS TO HAVE A NEW DEADLINE TWO WEEKS OUT PROVIDED THE PROJECTS
-# EXPIRED THE DAY BEFORE THE RUN DAY. USE WITH AUTOMATED TASK MANAGEMENT TO RUN DAILY.
+# EXPIRED THE DAY BEFORE THE RUN DAY. USE WITH A CHRON JOB TO RUN DAILY.
 ###########################################################################################
 
 
