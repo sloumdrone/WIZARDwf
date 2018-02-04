@@ -93,7 +93,7 @@ def wizardCall():
 if __name__ == '__main__':
     wizardCall()
     username = 'foo@bar.com'
-    password = 'CCllrMzGU' # encrypted password
+    password = 'hashed-pw' #an actual password has would go here
     client = StreamClient('https://somedomain.attask-ondemand.com/attask/api/')
     client.login(username,masking.unmask(password))
     getProject()
